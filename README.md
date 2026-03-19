@@ -90,7 +90,7 @@ Raw Data → EDA → Preprocessing → Model Training → Evaluation → Interpr
 
 All three models comfortably outperform random classification. XGBoost and Random Forest nearly hug the top-left corner — indicating excellent diagnostic discrimination.
 
-![ROC Curve](ROC_curve.jpg)
+![ROC Curve](ROC%20curve.jpg)
 
 ---
 
@@ -98,7 +98,7 @@ All three models comfortably outperform random classification. XGBoost and Rando
 
 XGBoost reveals that **BMI** and **Cholesterol** are the two most powerful predictors of health risk, followed by Stress Level, Glucose Level, and Sleep Hours — offering clinically meaningful, actionable insights.
 
-![Feature Importance](Importance_image.jpg)
+![Feature Importance](Feature%20Importance.jpg)
 
 ---
 
