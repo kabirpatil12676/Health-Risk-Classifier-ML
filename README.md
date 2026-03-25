@@ -1,145 +1,63 @@
-# 🏥 Health Risk Classifier ML
+# Health Risk Classification & Web App
 
-> An end-to-end Machine Learning pipeline to classify patient health risk (**Healthy vs. High Risk**) using clinical and lifestyle features — with full EDA, model comparison, and XGBoost interpretability.
+**Author:** [Kabir Patil](https://www.linkedin.com/in/kabir-patil-7a2a9b30b/)
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat&logo=python)
-![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.x-orange?style=flat&logo=scikit-learn)
-![XGBoost](https://img.shields.io/badge/XGBoost-Enabled-green?style=flat)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?style=flat&logo=jupyter)
-![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat)
+## Project Overview
+Catching health risks early is important for improving patient care. In this project, I built a machine learning pipeline to predict whether individuals are 'Healthy' (0) or 'At-Risk' (1) based on their medical history, lifestyle factors, and physiological data. 
 
----
+**🌟 Major Update:** I have also deployed the best performing model (XGBoost) into a fully interactive web application using Streamlit! This allows users or doctors to input patient vitals and receive a real-time risk assessment.
 
-## 📌 Table of Contents
+## Repository Contents
+*   `Health_Risk_Classification_Enhanced.ipynb`: The main Jupyter Notebook with my exploratory data analysis (EDA), data cleaning, model training, and evaluation.
+*   `app.py`: The Streamlit Web Application script for the interactive UI.
+*   `train_model.py`: The script used to train and serialize the final deployment model.
+*   `novagen_dataset.csv`: The dataset containing over 9,500 patient records across 22 different features.
+*   `requirements.txt`: The Python packages you need to run this code locally.
+*   `xgboost_health_model.pkl`: The serialized XGBoost classifier model.
 
-- [Project Overview](#-project-overview)
-- [Business Value](#-business-value)
-- [Dataset](#-dataset)
-- [Project Workflow](#-project-workflow)
-- [Exploratory Data Analysis](#-exploratory-data-analysis)
-- [Model Results](#-model-results)
-- [Feature Importance](#-feature-importance)
-- [Tech Stack](#-tech-stack)
-- [How to Run](#-how-to-run)
-- [Author](#-author)
+## Key Findings from the Data
+The dataset includes numerical and categorical data like Age, BMI, Blood Pressure, Cholesterol, Diet, and Sleep Hours.
 
----
+Some interesting initial findings from the EDA:
+1.  **Age & BMI:** These showed up as the strongest indicators. As age and BMI go up, the chances of being classified as 'At-Risk' increase significantly.
+2.  **Blood Pressure:** This also had a noticeable correlation with the risk classification.
 
-## 🔍 Project Overview
+Check the notebook for the actual distribution plots and the feature correlation heatmap.
 
-This project implements a full Machine Learning lifecycle to predict whether a patient is **Healthy (0)** or at **High Health Risk (1)** based on a rich combination of demographic, lifestyle, and medical metrics.
+## Machine Learning Models
+I tested a few different models to see what worked best:
 
-Three classification models are trained and rigorously compared:
-- **Logistic Regression** — interpretable baseline
-- **Random Forest** — robust ensemble method
-- **XGBoost** — state-of-the-art gradient boosting
+1.  **Logistic Regression:** Used this as a simple baseline model.
+2.  **Random Forest Classifier:** A stronger tree-based model, tuned using GridSearch to find good hyperparameters.
+3.  **XGBoost Classifier:** This is often the go-to for tabular data, so I wanted to see how it performed.
 
----
+### Results
+After tuning, the XGBoost and Random Forest models outperformed the Logistic Regression baseline by a wide margin. They are much better at picking up on the complex relationships in patient data. The notebook includes a chart comparing their F1-Scores. The XGBoost model was selected for the final web deployment!
 
-## 💼 Business Value
+## Running the Code Locally
 
-In healthcare, a **False Negative** (predicting a sick patient as healthy) can be life-threatening. This project prioritizes **Recall** and **ROC-AUC** alongside accuracy to ensure the model is clinically responsible, not just statistically correct.
-
-The XGBoost feature importance analysis also provides actionable insights for medical professionals — surfacing which biomarkers most strongly predict risk.
-
----
-
-## 📊 Dataset
-
-**File:** `novagen_dataset.csv`
-
-The dataset contains patient records with the following feature categories:
-
-| Category | Features |
-|---|---|
-| Biometric | BMI, Blood Pressure, Cholesterol, Glucose Level, Heart Rate |
-| Lifestyle | Sleep Hours, Exercise Hours, Water Intake, Stress Level |
-| Demographic | Age, Blood Group |
-| Behavioral | Smoking, Alcohol, Diet Type, Physical Activity |
-| Medical | Medical History, Allergies, Mental Health |
-| **Target** | `0` = Healthy, `1` = High Health Risk |
-
----
-
-## 🔄 Project Workflow
-
-```
-Raw Data → EDA → Preprocessing → Model Training → Evaluation → Interpretability
-```
-
-1. **Data Loading & Inspection** — shape, dtypes, nulls, duplicates
-2. **Exploratory Data Analysis** — distributions, correlations, bivariate analysis
-3. **Preprocessing** — boolean encoding, stratified train-test split (80/20), StandardScaler
-4. **Model Training** — Logistic Regression, Random Forest, XGBoost
-5. **Evaluation** — Accuracy, Precision, Recall, F1-Score, ROC-AUC, Confusion Matrix
-6. **Interpretability** — XGBoost Feature Importance
-
----
-
-## 🏆 Model Results
-
-| Model | Accuracy | ROC-AUC |
-|---|---|---|
-| Logistic Regression | ~85% | 0.888 |
-| Random Forest | ~95% | 0.985 |
-| **XGBoost** | **~96%** | **0.989** |
-
-> ✅ **XGBoost** achieves the best performance across all metrics, closely followed by Random Forest. Logistic Regression serves as a solid interpretable baseline.
-
-### ROC Curve Comparison
-
-All three models comfortably outperform random classification. XGBoost and Random Forest nearly hug the top-left corner — indicating excellent diagnostic discrimination.
-
-![ROC Curve](ROC%20curve.jpg)
-
----
-
-## 🔬 Feature Importance
-
-XGBoost reveals that **BMI** and **Cholesterol** are the two most powerful predictors of health risk, followed by Stress Level, Glucose Level, and Sleep Hours — offering clinically meaningful, actionable insights.
-
-![Feature Importance](Feature%20Importance.jpg)
-
----
-
-## 🛠 Tech Stack
-
-| Library | Purpose |
-|---|---|
-| `pandas`, `numpy` | Data manipulation |
-| `matplotlib`, `seaborn` | Visualization |
-| `scikit-learn` | ML models, preprocessing, evaluation |
-| `xgboost` | Gradient boosting classifier |
-| `jupyter` | Interactive notebook environment |
-
----
-
-## ▶️ How to Run
-
-1. **Clone the repository**
+1. **Clone the repository:**
    ```bash
-   git clone https://github.com/kabirpatil12676/Health-Risk-Classifier-ML.git
-   cd Health-Risk-Classifier-ML
+   git clone https://github.com/kabirpatil12676/Health-Risk-Classification.git
+   cd Health-Risk-Classification
    ```
 
-2. **Install dependencies**
+2. **Install dependencies:**
    ```bash
-   pip install pandas numpy matplotlib seaborn scikit-learn xgboost jupyter
+   pip install -r requirements.txt
    ```
 
-3. **Launch the notebook**
+3. **To view the Data Analysis (Jupyter Notebook):**
    ```bash
-   jupyter notebook "Health Risk Classification Using Machine Learning.ipynb"
+   jupyter notebook "Health_Risk_Classification_Enhanced.ipynb"
    ```
 
----
+4. **To launch the Web Application (Streamlit):**
+   ```bash
+   streamlit run app.py
+   ```
 
-## 👤 Author
-
+## Contact
 **Kabir Patil**
-
-[![GitHub](https://img.shields.io/badge/GitHub-kabirpatil12676-black?style=flat&logo=github)](https://github.com/kabirpatil12676)
-
----
-
-*If you found this project useful, consider giving it a ⭐ — it helps others discover it!*
+*   **LinkedIn:** [linkedin.com/in/kabir-patil-7a2a9b30b](https://www.linkedin.com/in/kabir-patil-7a2a9b30b/)
+*   **GitHub:** [github.com/kabirpatil12676](https://github.com/kabirpatil12676)
