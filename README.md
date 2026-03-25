@@ -38,8 +38,8 @@ After tuning, the XGBoost and Random Forest models outperformed the Logistic Reg
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/kabirpatil12676/Health-Risk-Classification.git
-   cd Health-Risk-Classification
+   git clone https://github.com/kabirpatil12676/Health-Risk-Classifier-ML.git
+   cd Health-Risk-Classifier-ML
    ```
 
 2. **Install dependencies:**
