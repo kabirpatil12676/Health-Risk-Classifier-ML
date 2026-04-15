@@ -1,6 +1,30 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import threading
+import time
+import requests
+
+# ── Keep-Alive: Prevent Streamlit Cloud from sleeping the app ──────────────────
+def _keep_alive():
+    """Background thread that pings this app every 10 minutes to prevent
+    Streamlit Community Cloud from putting the app to sleep due to inactivity."""
+    while True:
+        time.sleep(600)  # 10 minutes
+        try:
+            # Ping the app's own URL; Streamlit injects HOSTNAME via env
+            import os
+            app_url = os.environ.get("STREAMLIT_SERVER_HEALTH_CHECK_URL", "http://localhost:8501/_stcore/health")
+            requests.get(app_url, timeout=10)
+        except Exception:
+            pass  # Silently ignore — network errors shouldn't crash the UI
+
+# Start the keep-alive thread only once
+if "_keep_alive_started" not in st.session_state:
+    st.session_state["_keep_alive_started"] = True
+    _t = threading.Thread(target=_keep_alive, daemon=True)
+    _t.start()
+# ──────────────────────────────────────────────────────────────────────────────
 
 # Set Page Config
 st.set_page_config(page_title="Health Risk Predictor", page_icon="🩺", layout="wide")

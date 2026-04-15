@@ -1,0 +1,16 @@
+[server]
+# Prevent the server from shutting down due to inactivity
+maxUploadSize = 200
+enableCORS = false
+enableXsrfProtection = true
+
+# Increase timeouts to prevent crashes from inactivity
+headless = true
+
+[browser]
+# Disable the "This app has gone to sleep" behavior on local deployments
+gatherUsageStats = false
+
+[global]
+# Keep the app from restarting unexpectedly
+developmentMode = false
